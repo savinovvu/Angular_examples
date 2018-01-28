@@ -1,53 +1,50 @@
-<div [ngClass]="'p-a-1 ' + getClasses(1)">
-  Name: {{model.getProduct(1)?.name || 'None'}}
-</div>
-<div class="form-group m-t-1">
-  <label>Name:</label>
-  <input class="form-control" [value]="model.getProduct(1)?.name || 'None'">
-</div>
-<table class="table table-sm table-bordered table-striped m-t-1">
-  <tr>
-    <th>1</th>
-    <th>2</th>
-    <th>3</th>
-    <th>4</th>
-    <th>5</th>
-  </tr>
-  <tr>
-    <td [attr.colspan]="model.getProducts().length">
-      {{model.getProduct(1)?.name || 'None'}}
-    </td>
-  </tr>
-</table>
+<div class="container">
 
-<div [class]="this.getClasses(1)">
-  The first product is {{model.getProduct(1).name}}.
-</div>
-<div class="p-a-1"
-     [class.bg-success]="model.getProduct(2).price < 50"
-     [class.bg-info]="model.getProduct(2).price >= 50">
-  The second product is {{model.getProduct(2).name}}
-</div>
 
-<p>объекты отображений классов</p>
-<div class="p-a-1" [ngClass]="getClassMap(1)">
-  The first product is {{model.getProduct(1).name}}.
-</div>
-<div class="p-a-1" [ngClass]="getClassMap(2)">
-  The second product is {{model.getProduct(2).name}}.
-</div>
-<div class="p-a-1" [ngClass]="{'bg-success': model.getProduct(3).price < 50,
-'bg-info': model.getProduct(3).price >= 50}">
-  The third product is {{model.getProduct(3).name}}
-</div>
+  <div class="bg-info p-a-1">
+    There are {{getProductCount()}} products.
+  </div>
 
-<p>Объекты для рабоыт со стилями</p>
+  <div *ngIf="getProductCount() > 4" class="bg-info p-a-1 m-t-1">
+    There are more than 4 products in the model
+  </div>
 
-<div class="p-a-1 bg-warning">
-  The <span [style.fontSize]="fontSizeWithUnits">first</span>
-  product is {{model.getProduct(1).name}}.
-</div>
-<div class="p-a-1 bg-info">
-  The <span [style.fontSize.px]="fontSizeWithoutUnits">second</span>
-  product is {{model.getProduct(2).name}}
+  <div *ngIf="getProductByPosition(0).name !='Kayak'" class="bg-info p-a-1 m-t-1">
+    The first product isn't Kayak
+  </div>
+
+  <div class="bg-info p-a-1 m-t-1" [ngSwitch]="getProduct(1).name">
+    <span *ngSwitchCase="targetName">Kayak</span>
+    <span *ngSwitchCase="'Lifejacket'">Lifejacket</span>
+    <span *ngSwitchDefault>Other Product</span>
+  </div>
+
+  <table class="table table-sm table-bordered m-t-1">
+    <tr>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+    </tr>
+    <tr
+      *ngFor="let item of getProducts(); let i = index; let odd = odd; let first = first; let last = last; trackBy:getKey"
+      [class.bg-info]="odd" [class.bg-primary]="!odd" [class.bg-warning]="first || last">
+      <td>{{i+1}}</td>
+      <td>{{item.name}}</td>
+      <td>{{item.category}}</td>
+      <td><span *ngIf="!last">{{item.price}}</span></td>
+    </tr>
+
+  </table>
+
+  <ng-template #titleTemplate>
+    <h4 class="p-a-1 bg-success"> repeated text</h4>
+  </ng-template>
+
+  <template [ngTemplateOutlet]="titleTemplate"></template>
+  <div class="bg-info p-a-1 m-a-1">
+    There are {{getProductCount()}} products.
+  </div>
+  <template *ngTemplateOutlet="titleTemplate"></template>
+
 </div>

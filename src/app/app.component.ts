@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {ApplicationRef, Component} from '@angular/core';
 import {Model} from './repository/model.service';
+import {Product} from './model/product.model';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +9,42 @@ import {Model} from './repository/model.service';
 })
 export class ProductComponent {
   public model: Model = new Model();
-  fontSizeWithUnits: string = "30px";
-  fontSizeWithoutUnits: string= "30";
+  fontSizeWithUnits: string = '30px';
+  fontSizeWithoutUnits: string = '30';
+  targetName: string = 'Kayak';
 
-  getClasses(key: number): string {
-    let product = this.model.getProduct(key);
-    return 'p-a-1 ' + (product.price < 50 ? 'bg-info' : 'bg-warning');
+
+  constructor(ref: ApplicationRef) {
+    (<any>window).appRef = ref;
+    (<any>window).model = this.model;
   }
 
-  getClassMap(key: number): Object {
-    let product = this.model.getProduct(key);
-    return {
-      'text-xs-center bg-danger': product.name == 'Kayak',
-      'bg-info': product.price < 50
-    };
+  getProduct(key: number): Product {
+    return this.model.getProduct(key);
   }
+
+  getProducts(): Product[] {
+    return this.model.getProducts();
+  }
+  getProductByPosition(position: number): Product {
+    return this.model.getProducts()[position];
+  }
+
+  getProductCount(): number {
+    console.log("getProductCount invoked");
+    return this.getProducts().length;
+  }
+
+  getKey(index: number, product: Product) {
+    return product.id;
+  }
+
+  get nextProduct(): Product {
+    return this.model.getProducts().shift();
+  }
+
 
 
 }
+
+
