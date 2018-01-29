@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { ProductComponent } from './app.component';
+import {FormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -10,7 +11,7 @@ import { ProductComponent } from './app.component';
     ProductComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, FormsModule
   ],
   providers: [],
   bootstrap: [ProductComponent]

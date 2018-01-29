@@ -8,16 +8,8 @@ import {Product} from './model/product.model';
   styleUrls: ['./app.component.css']
 })
 export class ProductComponent {
-  public model: Model = new Model();
-  fontSizeWithUnits: string = '30px';
-  fontSizeWithoutUnits: string = '30';
-  targetName: string = 'Kayak';
-
-
-  constructor(ref: ApplicationRef) {
-    (<any>window).appRef = ref;
-    (<any>window).model = this.model;
-  }
+  model: Model = new Model();
+  selectedProduct: string;
 
   getProduct(key: number): Product {
     return this.model.getProduct(key);
@@ -26,23 +18,10 @@ export class ProductComponent {
   getProducts(): Product[] {
     return this.model.getProducts();
   }
-  getProductByPosition(position: number): Product {
-    return this.model.getProducts()[position];
-  }
 
-  getProductCount(): number {
-    console.log("getProductCount invoked");
-    return this.getProducts().length;
+  getSelected(product: Product): boolean {
+    return product.name == this.selectedProduct;
   }
-
-  getKey(index: number, product: Product) {
-    return product.id;
-  }
-
-  get nextProduct(): Product {
-    return this.model.getProducts().shift();
-  }
-
 
 
 }
