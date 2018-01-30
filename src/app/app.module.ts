@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 
 
 import { ProductComponent } from './app.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    ProductComponent
+    ProductComponent,
   ],
   imports: [
-    BrowserModule, FormsModule
+    BrowserModule, FormsModule, ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [ProductComponent]
