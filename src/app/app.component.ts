@@ -11,10 +11,24 @@ import {ProductFormGroup} from './formValidators/productFormGroup';
 })
 export class ProductComponent {
   model: Model = new Model();
-  selectedProduct: string;
-  newProduct: Product = new Product();
-  formSubmitted: boolean = false;
   form: ProductFormGroup = new ProductFormGroup();
+
+  getProduct(key: number): Product {
+    return this.model.getProduct(key);
+  }
+
+  getProducts(): Product[] {
+    return this.model.getProducts();
+  }
+
+  newProduct: Product = new Product();
+
+  addProduct(product: Product) {
+    this.model.saveProduct(product);
+  }
+
+  formSubmitted: boolean = false;
+
 
   submitForm(form: NgForm) {
     this.formSubmitted = true;
@@ -25,25 +39,6 @@ export class ProductComponent {
       this.formSubmitted = false;
     }
   }
-
-  getProduct(key: number): Product {
-    return this.model.getProduct(key);
-  }
-
-  getProducts(): Product[] {
-    return this.model.getProducts();
-  }
-
-
-  get jsonProduct() {
-    return JSON.stringify(this.newProduct);
-  }
-
-  addProduct(product: Product) {
-    console.log('New Product: ' + this.jsonProduct);
-  }
-
-
 }
 
 
