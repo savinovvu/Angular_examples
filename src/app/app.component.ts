@@ -1,8 +1,8 @@
-import {ApplicationRef, Component} from '@angular/core';
-import {Model} from './repository/model.service';
-import {Product} from './model/product.model';
-import {NgForm} from '@angular/forms';
-import {ProductFormGroup} from './formValidators/productFormGroup';
+import {Product} from "./model/product.model";
+import {ProductFormGroup} from "./formValidators/productFormGroup";
+import {Model} from "./repository/model.service";
+import {Component} from "@angular/core";
+import {NgForm} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -11,20 +11,10 @@ import {ProductFormGroup} from './formValidators/productFormGroup';
 })
 export class ProductComponent {
   model: Model = new Model();
-  selectedProduct: string;
+  form: ProductFormGroup = new ProductFormGroup();
+  showTable: boolean = true;
   newProduct: Product = new Product();
   formSubmitted: boolean = false;
-  form: ProductFormGroup = new ProductFormGroup();
-
-  submitForm(form: NgForm) {
-    this.formSubmitted = true;
-    if (form.valid) {
-      this.addProduct(this.newProduct);
-      this.newProduct = new Product();
-      form.reset();
-      this.formSubmitted = false;
-    }
-  }
 
   getProduct(key: number): Product {
     return this.model.getProduct(key);
@@ -35,15 +25,22 @@ export class ProductComponent {
   }
 
 
-  get jsonProduct() {
-    return JSON.stringify(this.newProduct);
+  addProduct(p: Product) {
+    this.model.saveProduct(p);
   }
 
-  addProduct(product: Product) {
-    console.log('New Product: ' + this.jsonProduct);
+  deleteProduct(key: number) {
+    this.model.deleteProduct(key);
   }
 
 
+  submitForm(form: NgForm) {
+    this.formSubmitted = true;
+    if (form.valid) {
+      this.addProduct(this.newProduct);
+      this.newProduct = new Product();
+      form.reset();
+      this.formSubmitted = false;
+    }
+  }
 }
-
-
