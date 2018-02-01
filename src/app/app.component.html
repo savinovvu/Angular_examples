@@ -1,31 +1,8 @@
-<div class="bg-info p-a-1 m-b-1">Model Data:{{jsonProduct}}</div>
-<form (ngSubmit)="submitForm(form)" [formGroup]="form" novalidate>
-  <div class="bg-danger p-a-1 m-b-1" *ngIf="formSubmitted && form.invalid">
-    There are problems with the form
-  </div>
-  <ul>
-    <li *ngFor="let error of form.getFormValidationMessages()">
-      {{error}}
-    </li>
-  </ul>
-
-
-  <div class="form-group" *ngFor="let control of form.productControls">
-    <label>{{control.label}}</label>
-    <input class="form-control"
-           [(ngModel)]="newProduct[control.modelProperty]"
-           name="{{control.modelProperty}}"
-           formControlName="{{control.modelProperty}}"/>
-    <ul class="text-danger list-unstyled"
-        *ngIf="(formSubmitted || control.dirty) && control.invalid">
-      <li *ngFor="let error of control.getValidationMessages()">
-        {{error}}
-      </li>
-    </ul>
-  </div>
-
-  <button [disabled]="formSubmitted && form.invalid"
-          [class.btn-secondary]="formSubmitted && form.invalid"
-          class="btn btn-primary" type="submit">Create
-  </button>
-</form>
+<div class="col-xs-4 p-a-1 bg-success">
+  <paProductForm (paNewProduct)="addProduct($event)"></paProductForm>
+</div>
+<div class="col-xs-8 p-a-1 bg-primary">
+  <paToggleView>
+    <paProductTable [model]="model"></paProductTable>
+  </paToggleView>
+</div>
