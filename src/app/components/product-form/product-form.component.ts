@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import {ProductFormGroup} from '../../formValidators/productFormGroup';
 import {Product} from '../../model/product.model';
+import {Model} from "../../repository/model.service";
 
 @Component({
   selector: 'paProductForm',
@@ -13,10 +14,12 @@ export class ProductFormComponent implements OnInit {
   newProduct: Product = new Product();
   formSubmitted: boolean = false;
 
+/*
   @Output('paNewProduct')
   newProductEvent = new EventEmitter<Product>();
+*/
 
-  constructor() {
+  constructor(private model:Model) {
   }
 
   ngOnInit() {
@@ -25,7 +28,8 @@ export class ProductFormComponent implements OnInit {
   submitForm(form: any) {
     this.formSubmitted = true;
     if (form.valid) {
-      this.newProductEvent.emit(this.newProduct);
+      // this.newProductEvent.emit(this.newProduct);
+      this.model.saveProduct(this.newProduct);
       this.newProduct = new Product();
       this.form.reset();
       this.formSubmitted = false;

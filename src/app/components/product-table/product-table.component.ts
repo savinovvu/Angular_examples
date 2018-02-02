@@ -2,6 +2,7 @@ import {Component, Input, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Model} from '../../repository/model.service';
 import {Product} from '../../model/product.model';
 import {PaCellColor} from "../../directive/pa-cell-color.directive";
+import {DiscountService} from "../../services/discount.service";
 
 @Component({
   selector: 'paProductTable',
@@ -9,11 +10,15 @@ import {PaCellColor} from "../../directive/pa-cell-color.directive";
   styleUrls: ['./product-table.component.css']
 })
 export class ProductTableComponent implements OnInit {
+
+  constructor(private dataModel: Model) {
+  }
+
   ngOnInit(): void {
   }
 
-  @Input("model")
-  dataModel: Model;
+  /* @Input("model")
+   dataModel: Model;*/
 
   getProduct(key: number): Product {
     return this.dataModel.getProduct(key);

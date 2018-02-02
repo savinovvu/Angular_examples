@@ -8,11 +8,14 @@ import {Component} from "@angular/core";
   styleUrls: ['./app.component.css']
 })
 export class ProductComponent {
-  model: Model = new Model();
 
-  addProduct(p: Product) {
+  /*constructor(private model: Model) {
+
+  }*/
+
+ /* addProduct(p: Product) {
     this.model.saveProduct(p);
-  }
+  }*/
 }
 
 

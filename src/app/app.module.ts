@@ -14,6 +14,13 @@ import {PaCellColor} from './directive/pa-cell-color.directive';
 import {PaCellColorSwitcher} from './directive/pa-cell-color-switcher.directive';
 import {PaAddTaxPipe} from './pipes/pa-add-tax.pipe';
 import {PaCategoryFilterPipe} from './pipes/pa-category-filter.pipe';
+import {PaDiscountDisplayComponent} from './components/pa-discount-display/pa-discount-display.component';
+import {PaDiscountEditorComponent} from './components/pa-discount-editor/pa-discount-editor.component';
+import {DiscountService} from "./services/discount.service";
+import {PaDiscountPipe} from './pipes/pa-discount.pipe';
+import {PadiscountAmountDirectiveDirective} from './directive/padiscount-amount-directive.directive';
+import {Model} from "./repository/model.service";
+import {SimpleDataSource} from "./datasource/simple-data-source.service";
 
 
 @NgModule({
@@ -29,11 +36,15 @@ import {PaCategoryFilterPipe} from './pipes/pa-category-filter.pipe';
     PaCellColor,
     PaAddTaxPipe,
     PaCategoryFilterPipe,
+    PaDiscountDisplayComponent,
+    PaDiscountEditorComponent,
+    PaDiscountPipe,
+    PadiscountAmountDirectiveDirective,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DiscountService, Model, SimpleDataSource],
   bootstrap: [ProductComponent]
 })
 export class AppModule {
