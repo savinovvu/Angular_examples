@@ -1,13 +1,15 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output, SkipSelf, ViewEncapsulation} from '@angular/core';
 import {ProductFormGroup} from '../../formValidators/productFormGroup';
 import {Product} from '../../model/product.model';
 import {Model} from "../../repository/model.service";
+import {VALUE_SERVICE} from '../../directive/pa-display-value.directive';
 
 @Component({
   selector: 'paProductForm',
   templateUrl: './product-form.component.html',
   styleUrls: ['./product-form.component.css'],
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
+  providers: [{ provide: VALUE_SERVICE, useValue: "Oranges" }]
 })
 export class ProductFormComponent implements OnInit {
   form: ProductFormGroup = new ProductFormGroup();
@@ -19,7 +21,8 @@ export class ProductFormComponent implements OnInit {
   newProductEvent = new EventEmitter<Product>();
 */
 
-  constructor(private model:Model) {
+  constructor(private model:Model, @Inject(VALUE_SERVICE) @SkipSelf() serviceValue: string) {
+    console.log('Service Value: ' + serviceValue);
   }
 
   ngOnInit() {
