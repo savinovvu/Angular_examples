@@ -1,5 +1,5 @@
 import {Directive, EventEmitter, HostBinding, HostListener, Input, Output} from "@angular/core";
-import {Product} from "../model/product.model";
+import {Product} from "../../model/product.model";
 
 @Directive({
   selector: "[pa-attr]"

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Product} from '../model/product.model';
+import {Product} from '../product.model';
 import {SimpleDataSource} from '../datasource/simple-data-source.service';
 
 @Injectable()

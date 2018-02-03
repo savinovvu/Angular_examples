@@ -8,7 +8,7 @@ import {DiscountService} from "../services/discount.service";
   selector: 'td[pa-price]',
   exportAs: "discount"
 })
-export class PadiscountAmountDirectiveDirective implements OnInit {
+export class PaDiscountAmountDirective implements OnInit {
   private differ: KeyValueDiffer<any,any>;
 
   constructor(private  keyValueDiffers: KeyValueDiffers,
