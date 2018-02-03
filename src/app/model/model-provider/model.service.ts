@@ -1,15 +1,15 @@
 import {Injectable} from '@angular/core';
 import {Product} from '../entities/product.model';
 import {StaticDataSource} from '../datasource/static-data-source.service';
+import {RestDataSource} from '../datasource/rest-data-source.service';
 
 @Injectable()
 export class Model {
   private products: Product[];
   private locator = (product: Product, id: number) => product.id == id;
 
-  constructor(private dataSource: StaticDataSource) {
-    this.products = new Array<Product>();
-    this.dataSource.getData().forEach(product => this.products.push(product));
+  constructor(private dataSource: RestDataSource) {
+    this.dataSource.getData().subscribe(data => this.products = data);
   }
 
   getProducts(): Product[] {
@@ -22,20 +22,24 @@ export class Model {
 
   saveProduct(product: Product) {
     if (product.id == 0 || product.id == null) {
-      product.id = this.generateID();
-      this.products.push(product);
+      this.dataSource.saveProduct(product)
+        .subscribe(product => this.products.push(product));
     } else {
-      let index = this.products
-        .findIndex(p => this.locator(p, product.id));
-      this.products.splice(index, 1, product);
+      this.dataSource.updateProduct(product).subscribe(product => {
+        let index = this.products
+          .findIndex(item => this.locator(item, product.id));
+        this.products.splice(index, 1, product);
+      });
     }
   }
 
   deleteProduct(id: number) {
-    let index = this.products.findIndex(product => this.locator(product, id));
-    if (index > -1) {
-      this.products.splice(index, 1);
-    }
+    this.dataSource.deleteProduct(id).subscribe(() => {
+      let index = this.products.findIndex(product => this.locator(product, id));
+      if (index > -1) {
+        this.products.splice(index, 1);
+      }
+    });
   }
 
   private generateID(): number {

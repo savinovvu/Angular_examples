@@ -1,3 +1,4 @@
+/*
 module.exports = {
   ghostMode: false,
   reloadDelay: 1000,
@@ -5,3 +6,4 @@ module.exports = {
   injectChanges: false,
   minify: false
 }
+*/
