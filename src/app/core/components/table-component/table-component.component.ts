@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Model} from '../../../model/model-provider/model.service';
-import {MODES, SharedState} from '../../state/shared-state.service';
+import {MODES, SHARED_STATE, SharedState} from '../../state/shared-state.service';
 import {Product} from '../../../model/entities/product.model';
+import {Observer} from 'rxjs/Observer';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ import {Product} from '../../../model/entities/product.model';
 })
 export class TableComponent implements OnInit {
 
-  constructor(private model: Model, private  state: SharedState) {
+  constructor(private model: Model, @Inject(SHARED_STATE) private observer: Observer<SharedState>) {
   }
 
   ngOnInit() {
@@ -30,13 +31,11 @@ export class TableComponent implements OnInit {
   }
 
   editProduct(key: number) {
-    this.state.id = key;
-    this.state.mode = MODES.EDIT;
+    this.observer.next(new SharedState(MODES.EDIT, key));
   }
 
   createProduct() {
-    this.state.id = undefined;
-    this.state.mode = MODES.CREATE;
+    this.observer.next(new SharedState(MODES.CREATE));
   }
 
 }

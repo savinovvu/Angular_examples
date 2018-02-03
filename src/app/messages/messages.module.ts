@@ -11,5 +11,5 @@ import {MessageService} from './service/message.service';
   exports: [MessageComponent],
   providers: [MessageService]
 })
-export class MessagesModule {
+export class MessageModule {
 }

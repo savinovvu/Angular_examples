@@ -1,5 +1,6 @@
 <div class="bg-primary p-a-1" [class.bg-warning]="editing">
   <h5>{{editing ? "Edit" : "Create"}} Product</h5>
+  Last Event: {{stateEvents| async | formatState}}
 </div>
 
 <form novalidate #form="ngForm" (ngSubmit)="submitForm(form)" (reset)="resetForm()">
@@ -16,7 +17,7 @@
 
   <div class="form-group">
     <label>Price</label>
-    <input class="form-control" name="category" [(ngModel)]="product.price" required pattern="[0-9\.]+$">
+    <input class="form-control" name="price" [(ngModel)]="product.price" required pattern="[0-9\.]+$">
   </div>
 
   <button type="submit" class="btn btn-primary" [class.btn-warning]="editing" [disabled]="form.invalid">

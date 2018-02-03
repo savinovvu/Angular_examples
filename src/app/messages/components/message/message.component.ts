@@ -12,7 +12,7 @@ export class MessageComponent implements OnInit {
   lastMessage: Message;
 
   constructor(messageService: MessageService) {
-    messageService.registerMessageHandler(handler => this.lastMessage = handler);
+    messageService.messages.subscribe(message => this.lastMessage = message);
   }
 
   ngOnInit() {
