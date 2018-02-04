@@ -33,7 +33,8 @@
     "zone.js": "^0.8.19",
     "intl": "1.2.4",
     "bootstrap": "4.0.0-alpha.4",
-    "font-awesome": "4.7.0"
+    "font-awesome": "4.7.0",
+    "html5-history-api": "^4.2.8"
   },
   "devDependencies": {
     "@angular/cli": "1.6.5",
