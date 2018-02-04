@@ -49,4 +49,25 @@ export class Model {
     }
     return candidate;
   }
+
+  public getNextProductId(id: number): number {
+    let index = this.products.findIndex(product => this.locator(product, id));
+    if (index > -1) {
+      let nextIndexOfProducts = (this.products.length) > index + 2 ? index + 1 : 0;
+      return this.products[nextIndexOfProducts].id;
+    } else {
+      return id || 0;
+    }
+  }
+
+  public getPreviosProductId(id: number): number {
+    let index = this.products.findIndex(product => this.locator(product, id));
+    if (index > -1) {
+      let PreviosIndexOfProducts = (index > 0) ? index - 1 : this.products.length - 1;
+      return this.products[PreviosIndexOfProducts].id;
+    } else {
+      return id || 0;
+    }
+  }
+
 }

@@ -14,26 +14,20 @@ export class FormComponent implements OnInit {
   product: Product = new Product();
   lastId: number;
   editing: boolean = false;
+  model: Model;
 
-  constructor(private model: Model,
+  constructor(model: Model,
               activeRoute: ActivatedRoute,
               private router: Router) {
-    this.editing = activeRoute.snapshot.params['mode'] === 'edit';
-    let id = activeRoute.snapshot.params['id'];
-    if (id != null) {
-      let name = activeRoute.snapshot.params['name'];
-      let category = activeRoute.snapshot.params['category'];
-      let price = activeRoute.snapshot.params['price'];
 
-      if (name != null && category != null && price != null) {
-        this.product.id = id;
-        this.product.name = name;
-        this.product.category = category;
-        this.product.price = Number.parseFloat(price);
-      } else {
-        Object.assign(this.product, model.getProduct(id) || new Product());
+    this.model = model;
+    activeRoute.params.subscribe(params => {
+      this.editing = params['mode'] == 'edit';
+      let id = params['id'];
+      if (id != null) {
+        Object.assign(this.product, model.getProduct(id || new Product()));
       }
-    }
+    });
   }
 
   ngOnInit() {
@@ -48,6 +42,14 @@ export class FormComponent implements OnInit {
 
   resetForm() {
     this.product = new Product();
+  }
+
+  routePreviousProductId(): void {
+    this.router.navigate(['/products', 'edit', this.model.getPreviosProductId(this.product.id)]);
+  }
+
+  routeNextProductId(): void {
+    this.router.navigate(['/products', 'edit', this.model.getNextProductId(this.product.id)]);
   }
 
 
