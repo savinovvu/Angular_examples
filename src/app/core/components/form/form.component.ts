@@ -12,7 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 })
 export class FormComponent implements OnInit {
   product: Product = new Product();
-  lastId: number;
+  originalProduct = new Product();
   editing: boolean = false;
   model: Model;
 
@@ -26,6 +26,7 @@ export class FormComponent implements OnInit {
       let id = params['id'];
       if (id != null) {
         Object.assign(this.product, model.getProduct(id || new Product()));
+        Object.assign(this.originalProduct, this.product);
       }
     });
   }
@@ -36,21 +37,16 @@ export class FormComponent implements OnInit {
   submitForm(form: NgForm) {
     if (form.valid) {
       this.model.saveProduct(this.product);
+      this.originalProduct = this.product;
       this.router.navigateByUrl('/');
     }
   }
 
-  resetForm() {
+ /* resetForm() {
     this.product = new Product();
-  }
+  }*/
 
-  routePreviousProductId(): void {
-    this.router.navigate(['/products', 'edit', this.model.getPreviosProductId(this.product.id)]);
-  }
 
-  routeNextProductId(): void {
-    this.router.navigate(['/products', 'edit', this.model.getNextProductId(this.product.id)]);
-  }
 
 
 }

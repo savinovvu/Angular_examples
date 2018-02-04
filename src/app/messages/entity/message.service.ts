@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
 
 export class Message {
 
   constructor(private _text: string,
-              private _error: boolean = false) {
+              private _error: boolean = false,
+              private _responses? :[[string, (string:any)=> void]]) {
   }
 
 
@@ -13,5 +13,10 @@ export class Message {
 
   get error(): boolean {
     return this._error;
+  }
+
+
+  get responses(): [[string, ((string:any) => void)]] {
+    return this._responses;
   }
 }
