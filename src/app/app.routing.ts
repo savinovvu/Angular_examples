@@ -13,43 +13,19 @@ import {LoadGuard} from './guards/load-guard.service';
 
 const modelResolver = {model: ModelResolver};
 
-const childRoutes: Routes = [
-  {
-    path: '',
-    component: EmptyComponent,
-    canActivateChild: [TermsGuard],
-    children:
-      [
-        {path: '', children: []},
-        {path: 'products', component: ProductCountComponent},
-        {path: 'categories', component: CategoryCountComponent}
-      ],
-    resolve: modelResolver
-  }
-];
+
 const routes: Routes = [
   {
-    path: 'ondemand',
-    loadChildren: 'app/ondemand/ondemand.module#OndemandModule',
-    canLoad:[LoadGuard]
-  },
-  {
-    path: 'form/:mode/:id',
-    component: FormComponent,
-    resolve: modelResolver,
+    path: 'form/:mode/:id', component: FormComponent,
     canDeactivate: [UnsavedGuard]
   },
-  {
-    path: 'form/:mode',
-    component: FormComponent,
-    resolve: modelResolver,
-    canActivate: [TermsGuard],
-  },
-  {path: 'table', component: TableComponent, children: childRoutes},
-  {path: 'table/:category', component: TableComponent, children: childRoutes},
+  {path: 'form/:mode', component: FormComponent, canActivate: [TermsGuard]},
+  {path: 'table', component: TableComponent},
+  {path: 'table/:category', component: TableComponent},
   {path: '', redirectTo: '/table', pathMatch: 'full'},
   {path: '**', component: NotFoundComponent}
 ];
+
 
 export const routing = RouterModule.forRoot(routes);
 

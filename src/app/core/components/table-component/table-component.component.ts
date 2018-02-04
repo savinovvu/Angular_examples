@@ -1,13 +1,15 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {AnimationTransitionEvent, Component, Inject, OnInit} from '@angular/core';
 import {Model} from '../../../model/model-provider/model.service';
 import {Product} from '../../../model/entities/product.model';
 import {ActivatedRoute} from '@angular/router';
+import {HighlightTrigger} from '../../animations/table.animations';
 
 @Component({
   moduleId: module.id,
   selector: 'paTable',
   templateUrl: './table-component.component.html',
-  styleUrls: ['./table-component.component.css']
+  styleUrls: ['./table-component.component.css'],
+  animations: [HighlightTrigger]
 })
 export class TableComponent implements OnInit {
   category: string = null;
@@ -48,6 +50,14 @@ export class TableComponent implements OnInit {
   deleteProduct(key: number) {
     this.model.deleteProduct(key);
   }
+
+  highlightCategory: string = '';
+
+  getRowState(category: string): string {
+    return this.highlightCategory == '' ? '' : this.highlightCategory == category ? 'selected' : 'notselected';
+  }
+
+
 
 
 }
